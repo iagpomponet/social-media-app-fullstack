@@ -25,7 +25,22 @@ module.exports = {
         id: res.id,
         email: res.email,
         username: res.username
-      })
+      }, 'secret_key');
+
+      return newUser;
+    }
+  },
+  
+  Query: {
+    users: async () => {
+      try {
+        const users = await User.find()
+        return users;
+      }
+      
+      catch(err){
+        throw new Error(err);
+      }
     }
   }
 }

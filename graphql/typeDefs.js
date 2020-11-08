@@ -2,7 +2,7 @@ const gql = require('graphql-tag');
 
 module.exports = gql`
 type User {
-  name: String!
+  username: String!
   id: ID!
   email: String!
   createdAt: String
@@ -29,7 +29,7 @@ type Post {
     id: ID!
     body: String!
     createdAt: String!
-    userName: String!
+    username: String!
 }
 
 `;
