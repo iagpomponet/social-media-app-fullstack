@@ -1,3 +1,3 @@
 module.exports = {
-  MONGODB: 'mongodb+srv://iago:admin@sm.z7tla.mongodb.net/SM?retryWrites=true&w=majority'
+  MONGODB: 'mongodb+srv://iagpomponet:wtfatAM3@cluster0.3aesu.mongodb.net/SM?retryWrites=true&w=majority'
 }
