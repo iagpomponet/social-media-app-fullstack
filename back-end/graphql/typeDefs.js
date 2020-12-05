@@ -21,8 +21,14 @@ input RegisterInput {
   email: String!
 }
 
+input PostInput {
+  body: String!
+  username: String!
+}
+
 type Mutation{
   register(registerInput: RegisterInput): User
+  createPost(postInput: PostInput): Post
 }
 
 type Post {
