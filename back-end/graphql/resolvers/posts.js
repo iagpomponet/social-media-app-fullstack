@@ -1,4 +1,7 @@
 const Post = require('../../src/models/Post');
+const { UserInputError } = require('apollo-server');
+const { validateCreatePostInput } = require('../../src/utils/post.validators');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
 	Query: {
@@ -13,17 +16,49 @@ module.exports = {
 		},
 	},
 	Mutations: {
-		async createPost(_, { postInput: { body, username } }) {
-			const token = jwt.verify(token);
+		async createPost(_, { postInput: { body, email, token } }) {
+			const { errors, valid } = validateCreatePostInput(body, email, token);
+
+			console.log('errors :>> ', errors);
+
+			if (!valid) {
+				throw new UserInputError('Post creation failed', { errors });
+			}
+
+			const verifyToken = jwt.verify(token, 'secret_key', (err, decoded) => {
+				console.log('err :>> ', err);
+				if (err) {
+					throw new UserInputError('Token Inválido', { err });
+				} else {
+					return decoded;
+				}
+			});
+
+			// console.log('decoded :>> ', decoded);
+
+			console.log('verifyToken :>> ', verifyToken);
+
+			if (!token) {
+				throw new UserInputError('Post creation failed', { errors });
+			}
+
+			if (!verifyToken) {
+				throw new UserInputError('Invalid Token', { errors });
+			}
 
 			const newPost = new Post({
 				body,
-				username,
+				email,
+				createAt: new Date().toISOString(),
 			});
 
 			await newPost.save();
 
-			return newPost;
+			return {
+				...newPost._doc,
+				id: newPost._id,
+				token,
+			};
 		},
 	},
 };

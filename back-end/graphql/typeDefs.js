@@ -24,7 +24,8 @@ module.exports = gql`
 
 	input PostInput {
 		body: String!
-		username: String!
+		email: String!
+		token: String!
 	}
 
 	type Mutation {
@@ -37,6 +38,6 @@ module.exports = gql`
 		id: ID!
 		body: String!
 		createdAt: String!
-		username: String!
+		email: String!
 	}
 `;

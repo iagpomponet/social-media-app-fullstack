@@ -5,7 +5,7 @@ const { UserInputError } = require('apollo-server');
 const {
 	validateRegisterInput,
 	validateLoginInput,
-} = require('../../src/utils/validators');
+} = require('../../src/utils/user.validators');
 
 function generateJWT(user) {
 	return jwt.sign(
@@ -76,8 +76,6 @@ module.exports = {
 			}
 
 			const passwordMatch = await bcrypt.compare(password, user.password);
-
-			console.log('passwordMatch :>> ', passwordMatch);
 
 			if (!passwordMatch) {
 				throw new UserInputError('Wrong password', { errors });
