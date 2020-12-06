@@ -2,7 +2,21 @@ const User = require('../../src/models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
-const { validateRegisterInput } = require('../../src/utils/validators');
+const {
+	validateRegisterInput,
+	validateLoginInput,
+} = require('../../src/utils/validators');
+
+function generateJWT(user) {
+	return jwt.sign(
+		{
+			id: user.id,
+			email: user.email,
+			username: user.username,
+		},
+		'secret_key',
+	);
+}
 
 module.exports = {
 	Mutation: {
@@ -10,7 +24,6 @@ module.exports = {
 			_,
 			{ registerInput: { username, password, confirmPassword, email } },
 		) => {
-			console.log('validateRegisterInput :>> ', validateRegisterInput);
 			const { errors, valid } = validateRegisterInput(
 				username,
 				email,
@@ -45,16 +58,42 @@ module.exports = {
 
 			const res = await newUser.save();
 
-			const token = jwt.sign(
-				{
-					id: res.id,
-					email: res.email,
-					username: res.username,
-				},
-				'secret_key',
-			);
+			const token = generateJWT(res);
 
 			return newUser;
+		},
+		login: async (_, { email, password }) => {
+			const { errors, valid } = validateLoginInput(email, password);
+
+			if (!valid) {
+				throw new UserInputError('Errors', { errors });
+			}
+
+			const user = await User.findOne({ email });
+
+			if (!user) {
+				throw new UserInputError('User not found!', { errors });
+			}
+
+			const passwordMatch = await bcrypt.compare(password, user.password);
+
+			console.log('passwordMatch :>> ', passwordMatch);
+
+			if (!passwordMatch) {
+				throw new UserInputError('Wrong password', { errors });
+			}
+
+			const token = generateJWT(user);
+
+			const returnObj = {
+				...user._doc,
+				id: user._id,
+				token,
+			};
+
+			console.log('returnObj :>> ', user._doc);
+
+			return returnObj;
 		},
 	},
 
@@ -62,6 +101,7 @@ module.exports = {
 		users: async () => {
 			try {
 				const users = await User.find();
+
 				return users;
 			} catch (err) {
 				throw new Error(err);

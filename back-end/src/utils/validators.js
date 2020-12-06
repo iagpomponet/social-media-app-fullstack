@@ -6,8 +6,6 @@ module.exports.validateRegisterInput = (
 ) => {
 	const errors = {};
 
-	console.log('dentro da not a function');
-
 	if (username.trim() === '') {
 		errors.username = 'Username must not be empty';
 	}
@@ -30,6 +28,23 @@ module.exports.validateRegisterInput = (
 
 	return {
 		errors: errors,
+		valid: Object.keys(errors).length == 0,
+	};
+};
+
+module.exports.validateLoginInput = (email, password) => {
+	const errors = {};
+
+	if (email.trim() === '') {
+		errors.email = 'Username must not be empty';
+	}
+
+	if (password.trim() === '') {
+		errors.password = 'Password must not be empty';
+	}
+
+	return {
+		errors,
 		valid: Object.keys(errors).length == 0,
 	};
 };
