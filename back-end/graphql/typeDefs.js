@@ -22,16 +22,11 @@ module.exports = gql`
 		email: String!
 	}
 
-	input PostInput {
-		body: String!
-		email: String!
-		token: String!
-	}
-
 	type Mutation {
 		register(registerInput: RegisterInput): User!
-		createPost(postInput: PostInput): Post!
+		createPost(body: String!): Post!
 		login(email: String!, password: String!): User!
+		likePost(username: String!, postId: String!): Post
 	}
 
 	type Post {

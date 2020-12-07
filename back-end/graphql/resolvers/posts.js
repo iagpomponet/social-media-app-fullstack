@@ -16,10 +16,10 @@ module.exports = {
 		},
 	},
 	Mutations: {
-		async createPost(_, { postInput: { body, email, token } }) {
+		async createPost(_, { body }) {
 			const { errors, valid } = validateCreatePostInput(body, email, token);
 
-			console.log('errors :>> ', errors);
+			// const user =
 
 			if (!valid) {
 				throw new UserInputError('Post creation failed', { errors });
@@ -33,10 +33,6 @@ module.exports = {
 					return decoded;
 				}
 			});
-
-			// console.log('decoded :>> ', decoded);
-
-			console.log('verifyToken :>> ', verifyToken);
 
 			if (!token) {
 				throw new UserInputError('Post creation failed', { errors });
@@ -59,6 +55,16 @@ module.exports = {
 				id: newPost._id,
 				token,
 			};
+		},
+
+		async likePost(_, postId, username) {
+			const post = Post.findById({ postId });
+
+			if (!post) {
+				throw new Error('Post not found');
+			}
+
+			return post;
 		},
 	},
 };
