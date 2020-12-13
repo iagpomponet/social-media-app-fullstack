@@ -46,3 +46,13 @@ export const Input = styled.input`
     border-color: ${props => props.theme.colors.secondary};
   }
 `
+
+export const NewAccountLink = styled.span`
+  margin: 10px 0;
+  color: ${props => props.theme.colors.secondary};
+
+  strong:hover {
+    opacity: 0.7; 
+    cursor: pointer;
+  }
+`
