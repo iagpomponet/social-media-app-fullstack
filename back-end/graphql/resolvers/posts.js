@@ -1,6 +1,6 @@
 const Post = require('../../src/models/Post');
 const { UserInputError } = require('apollo-server');
-const { validateCreatePostInput } = require('../../src/utils/post.validators');
+
 const checkAuth = require('../../src/utils/check-auth');
 
 const jwt = require('jsonwebtoken');

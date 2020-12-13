@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 //context is the info of request
 module.exports = context => {
-  console.log('context :>> ', context.req);
   // Pega a autorizacao pelo header da request
   const authHeader = context.req.headers.authorization;
   const { AuthenticationError } = require('apollo-server');
