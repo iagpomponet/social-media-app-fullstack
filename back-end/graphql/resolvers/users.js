@@ -1,7 +1,7 @@
 const User = require('../../src/models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { UserInputError } = require('apollo-server');
+const { UserInputError, ApolloError } = require('apollo-server');
 const {
 	validateRegisterInput,
 	validateLoginInput,
@@ -81,15 +81,20 @@ module.exports = {
 				throw new UserInputError('Wrong password', { errors });
 			}
 
-			const token = generateJWT(user);
+			try {
+				const token = generateJWT(user);
+			}
+			catch(err){
+				throw new ApolloError(err);
+			}
+
+			
 
 			const returnObj = {
 				...user._doc,
 				id: user._id,
 				token,
 			};
-
-			
 
 			return returnObj;
 		},
