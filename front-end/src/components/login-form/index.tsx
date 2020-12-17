@@ -79,11 +79,11 @@ const LoginForm: FunctionComponent = () => {
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
         if(data){
-          Swal.fire({ 
-            icon: "success",
-            "title": `Login realizado com sucesso`
-          });
           console.log('data :>> ', data);
+          const { token } = data?.login;
+
+          saveUserTokenOnCookie(token);
+
         } else if (errors?.length){
           Swal.fire({ 
             icon: "error",
@@ -95,7 +95,11 @@ const LoginForm: FunctionComponent = () => {
     catch(err){
       throw new Error(err);
     }
-    
+  }
+
+  const saveUserTokenOnCookie = (token) => {
+    debugger;
+    document.cookie = `userAuthToken=${token}`;
   }
 
    
