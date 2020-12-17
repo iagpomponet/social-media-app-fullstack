@@ -89,7 +89,7 @@ module.exports = {
 				token,
 			};
 
-			console.log('returnObj :>> ', user._doc);
+			
 
 			return returnObj;
 		},

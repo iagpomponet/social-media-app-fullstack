@@ -1,11 +1,7 @@
-import { ApolloError, gql, useMutation } from '@apollo/client';
+import { ApolloError, gql } from '@apollo/client';
 import client from './client'
 
 
-type userInput = {
-  email: String,
-  password: String
-}
 
 export function getUsers(){
   try {
@@ -25,12 +21,8 @@ export function getUsers(){
   }
 }
 
-export function Login(userInput: userInput){
-  const { email, password } = userInput;
-  const LOGIN = gql`
-    mutation login(email: email, password: password){
-      token
-    }
-  `
-  const [login, { data }] = useMutation(LOGIN)
+export async function Login(email: string, password: string){
+  debugger;
+  
+  
 }
