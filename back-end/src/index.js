@@ -11,7 +11,6 @@ const resolvers = require('../graphql/resolvers/index');
 
 const app = express();
 
-const corsOptions = { credentials: true, origin: 'http://localhost:3000', };
 
 const server = new ApolloServer({
   typeDefs,
@@ -20,13 +19,14 @@ const server = new ApolloServer({
   context: ({ req, res }) => ({ req , res })
 });
 
+
+
 app.use(
   cors({
-    credentials: 'include',
+    credentials: true,
     origin: "http://localhost:3000"
   })
 );
-
 
 server.applyMiddleware({ app, cors: false, path: '/graphql' })
 
@@ -36,6 +36,6 @@ mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
   })
   .then(res => {
     app.listen({ port: 5000 }, () => {
-      console.log('gay')
+      console.log('Server Connected!')
     })
 })

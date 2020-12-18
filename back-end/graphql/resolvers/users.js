@@ -93,7 +93,6 @@ module.exports = {
 			res.cookie("token", token, {
 				httpOnly: true,
 				sameSite: 'lax',
-				domain: 'http://localhost:3000', 
         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
       });
 
