@@ -22,9 +22,6 @@ const LoginForm: FunctionComponent = () => {
   const Login = (email: string, password: string) => {
 
     
-
-    debugger;
-    
   }
 
   const validateLogin = (email: string, password: string) => {
@@ -79,10 +76,9 @@ const LoginForm: FunctionComponent = () => {
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
         if(data){
-          console.log('data :>> ', data);
           const { token } = data?.login;
 
-          saveUserTokenOnCookie(token);
+          
 
         } else if (errors?.length){
           Swal.fire({ 
@@ -98,8 +94,8 @@ const LoginForm: FunctionComponent = () => {
   }
 
   const saveUserTokenOnCookie = (token) => {
-    debugger;
-    document.cookie = `userAuthToken=${token}`;
+    
+    document.cookie = `userAuthToken=${token};secure;`;
   }
 
    

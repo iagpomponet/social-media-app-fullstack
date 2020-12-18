@@ -22,7 +22,7 @@ export function getUsers(){
 }
 
 export async function Login(email: string, password: string){
-  debugger;
+  
   
   
 }
