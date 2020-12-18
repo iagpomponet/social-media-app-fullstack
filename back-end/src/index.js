@@ -3,22 +3,32 @@ const { ApolloServer } = require('apollo-server-express');
 //for declaring graphql schema
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
-const { MONGODB } = require('./config.js')
+const { MONGODB } = require('./config.js');
 const typeDefs = require('../graphql/typeDefs');
 const resolvers = require('../graphql/resolvers/index');
 
 const app = express();
 
+const corsOptions = { credentials: true, origin: 'http://localhost:3000', };
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   playground: true,
-  context: ({ req }) => ({ req })
+  context: ({ req, res }) => ({ req , res })
 });
 
+app.use(
+  cors({
+    credentials: 'include',
+    origin: "http://localhost:3000"
+  })
+);
 
-server.applyMiddleware({ app, path: '/teste' })
+
+server.applyMiddleware({ app, cors: false, path: '/graphql' })
 
 mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(res => {

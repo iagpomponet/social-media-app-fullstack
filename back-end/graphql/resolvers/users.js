@@ -1,7 +1,7 @@
 const User = require('../../src/models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { UserInputError, ApolloError } = require('apollo-server');
+const { UserInputError } = require('apollo-server');
 const {
 	validateRegisterInput,
 	validateLoginInput,
@@ -62,7 +62,7 @@ module.exports = {
 
 			return newUser;
 		},
-		login: async (_, { email, password }) => {
+		login: async (_, { email, password }, { res }) => {
 			const { errors, valid } = validateLoginInput(email, password);
 
 			if (!valid) {
@@ -80,21 +80,22 @@ module.exports = {
 			if (!passwordMatch) {
 				throw new UserInputError('Wrong password', { errors });
 			}
-
-			try {
-				const token = generateJWT(user);
-			}
-			catch(err){
-				throw new ApolloError(err);
-			}
-
 			
+
+			const token = generateJWT(user);
 
 			const returnObj = {
 				...user._doc,
 				id: user._id,
 				token,
 			};
+
+			res.cookie("token", token, {
+				httpOnly: true,
+				sameSite: 'lax',
+				domain: 'http://localhost:3000', 
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+      });
 
 			return returnObj;
 		},
