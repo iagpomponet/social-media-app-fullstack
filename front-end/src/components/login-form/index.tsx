@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import Swal from 'sweetalert2';
 import * as Styled from './styles';
 
-import { ApolloError, gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 const LoginForm: FunctionComponent = () => {
   const [ userInput, setUserInput ] = useState({
@@ -17,11 +17,6 @@ const LoginForm: FunctionComponent = () => {
       ...prevState,
       [id]: value
     }))
-  }
-
-  const Login = (email: string, password: string) => {
-
-    
   }
 
   const validateLogin = (email: string, password: string) => {
@@ -58,7 +53,7 @@ const LoginForm: FunctionComponent = () => {
             login(email: $email, password: $password){
               username
               token
-              email
+              email 
             }
         } 
       `
@@ -76,9 +71,7 @@ const LoginForm: FunctionComponent = () => {
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
         if(data){
-          const { token } = data?.login;
-
-          
+          alert('logou com sucesso')
 
         } else if (errors?.length){
           Swal.fire({ 
@@ -91,11 +84,6 @@ const LoginForm: FunctionComponent = () => {
     catch(err){
       throw new Error(err);
     }
-  }
-
-  const saveUserTokenOnCookie = (token) => {
-    
-    document.cookie = `userAuthToken=${token};secure;`;
   }
 
    

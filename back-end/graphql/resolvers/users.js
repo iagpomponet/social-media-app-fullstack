@@ -90,7 +90,7 @@ module.exports = {
 				token,
 			};
 
-			res.cookie("token", token, {
+			res.cookie("smAuthCookie", token, {
 				httpOnly: true,
 				sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
