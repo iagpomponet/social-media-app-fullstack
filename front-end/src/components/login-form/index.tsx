@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import Swal from 'sweetalert2';
+import { Redirect } from 'react-router-dom'
 import * as Styled from './styles';
 
 import { gql, useMutation } from '@apollo/client';
@@ -71,8 +72,7 @@ const LoginForm: FunctionComponent = () => {
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
         if(data){
-          alert('logou com sucesso')
-
+          <Redirect to="/login" />
         } else if (errors?.length){
           Swal.fire({ 
             icon: "error",

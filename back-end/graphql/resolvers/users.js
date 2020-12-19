@@ -94,7 +94,11 @@ module.exports = {
 				httpOnly: true,
 				sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-      });
+			});
+			
+			res.cookie("userLoggedIn", 'true', {
+				maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+			});
 
 			return returnObj;
 		},
