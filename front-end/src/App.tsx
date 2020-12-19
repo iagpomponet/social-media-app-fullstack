@@ -7,6 +7,9 @@ import LoginPage from './pages/login/index';
 import GlobalStyle from './globalStyles'
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme';
+import AuthProvider from "./contexts/auth";
+
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,14 +24,16 @@ function App() {
     <ApolloProvider client={client}>
       <GlobalStyle />
       <ThemeProvider theme={theme} >
-        <Router>
-          <Route path="/">
-            <Feed />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <Route path="/">
+              <Feed />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+          </Router>
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

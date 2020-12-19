@@ -1,7 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom'
+import { useAuth } from '../../contexts/auth';
 import * as Styled from './styles';
+import { useHistory } from 'react-router-dom';
 
 import { gql, useMutation } from '@apollo/client';
 
@@ -10,6 +12,9 @@ const LoginForm: FunctionComponent = () => {
     email: "",
     password: ""
   })
+
+  const { user, setUser } = useAuth();
+  const history = useHistory();
 
   const handleInputChange = (e) => { 
     const { id, value } = e.target;
@@ -72,7 +77,14 @@ const LoginForm: FunctionComponent = () => {
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
         if(data){
-          <Redirect to="/login" />
+          setUser({
+            ...user,
+            ...data?.login,
+            signed: true
+          });
+
+          history.push('/');
+          
         } else if (errors?.length){
           Swal.fire({ 
             icon: "error",
