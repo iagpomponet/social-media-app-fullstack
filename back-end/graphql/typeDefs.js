@@ -26,6 +26,7 @@ module.exports = gql`
 		register(registerInput: RegisterInput): User!
 		createPost(body: String!): Post!
 		login(email: String!, password: String!): User!
+		logout: Boolean
 		likePost(username: String!, postId: String!): Post
 	}
 

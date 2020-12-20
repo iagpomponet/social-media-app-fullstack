@@ -102,6 +102,17 @@ module.exports = {
 
 			return returnObj;
 		},
+		logout(_ , __ , { res }){
+			res.cookie("smAuthCookie", '', {
+				httpOnly: true,
+				sameSite: 'lax',
+				maxAge: Date.now() // 7 days
+			});
+			
+			res.cookie("userLoggedIn", 'false', {
+				maxAge: Date.now() // 7 days
+			});
+		}
 	},
 
 	Query: {

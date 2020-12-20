@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { getUsers } from './service/UserService';
+
 import Feed from '../src/pages/feed/index';
 import client from './service/client';
 import LoginPage from './pages/login/index';
 import GlobalStyle from './globalStyles'
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme';
-import AuthProvider from "./contexts/auth";
+import AuthProvider, { useAuth } from "./contexts/auth";
+import Header from './components/header/index';
 
 
 import {
@@ -19,6 +20,7 @@ import {
 
 function App() {
   const [theme] = useState(defaultTheme);
+  
 
   return (
     <ApolloProvider client={client}>
@@ -26,10 +28,11 @@ function App() {
       <ThemeProvider theme={theme} >
         <AuthProvider>
           <Router>
-            <Route path="/">
+            <Header />
+            <Route exact path="/">
               <Feed />
             </Route>
-            <Route path="/login">
+            <Route exact path="/login">
               <LoginPage />
             </Route>
           </Router>

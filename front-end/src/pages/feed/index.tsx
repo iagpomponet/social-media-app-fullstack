@@ -6,10 +6,8 @@ import { Redirect } from 'react-router-dom'
 const Feed = () => { 
   const authCookie = Cookies.get('userLoggedIn');
 
-  console.log('authCookie :>> ', useAuth());
-
   return (
-    !authCookie ? 
+    !authCookie || authCookie == 'false' ? 
     <Redirect to="/login" /> :
     <div>
       Feed

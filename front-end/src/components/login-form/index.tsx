@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
 import Swal from 'sweetalert2';
-import { Redirect } from 'react-router-dom'
 import { useAuth } from '../../contexts/auth';
 import * as Styled from './styles';
 import { useHistory } from 'react-router-dom';
@@ -58,7 +57,6 @@ const LoginForm: FunctionComponent = () => {
         mutation MakeLogin($email: String!, $password: String!){
             login(email: $email, password: $password){
               username
-              token
               email 
             }
         } 
@@ -76,15 +74,16 @@ const LoginForm: FunctionComponent = () => {
       if(validateLogin(email, password)){
         const { data, errors } = await login({ variables : { email: email, password: password }});
 
-        if(data){
-          setUser({
-            ...user,
-            ...data?.login,
-            signed: true
-          });
+        const newUserData = {
+          ...user,
+          ...data?.login,
+          signed: true
+        }
 
+        if(data){
+          setUser(newUserData);
+          localStorage.setItem('userData', JSON.stringify(newUserData));
           history.push('/');
-          
         } else if (errors?.length){
           Swal.fire({ 
             icon: "error",

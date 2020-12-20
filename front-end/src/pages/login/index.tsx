@@ -9,7 +9,7 @@ const LoginPage: FunctionComponent = () => {
 
 
    return (
-      authCookie ?
+      authCookie && authCookie != 'false' ?
       <Redirect path="/" /> : 
       <Styled.Container>
          <Styled.Login>
