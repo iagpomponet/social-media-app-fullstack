@@ -1,10 +1,4 @@
-import styled from "styled-components";
-
-export const Label = styled.label `
-  font-weight: 700;
-  margin: 10px 0;
-  color: ${props => props.theme.colors.secondary};
-`
+import styled from 'styled-components';
 
 export const Button = styled.button`
   background-color: ${props => props.theme.colors.secondary};
@@ -20,18 +14,6 @@ export const Button = styled.button`
   transition: 0.4s;
 
   &:hover {
-    opacity: 0.7; 
-    cursor: pointer;
-  }
-`
-
-
-
-export const NewAccountLink = styled.span`
-  margin: 10px 0;
-  color: ${props => props.theme.colors.secondary};
-
-  strong:hover {
     opacity: 0.7; 
     cursor: pointer;
   }

@@ -39,6 +39,8 @@ app.use(
 
 app.use(function (req, res, next) {
   const token = req.cookies['smAuthCookie'];
+
+  console.log('req.cookies :>> ', req.cookies);
   
   //a cada request feita, se houver o cookie com o jwt eu o adiciono no Bearer header da request 
   if(token){
@@ -48,11 +50,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+
 server.applyMiddleware({ app, cors: false, path: '/graphql' })
 
-app.get('/vtex', function (req, res) {
-  console.log(req.cookies)
-});
 
 mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(res => {

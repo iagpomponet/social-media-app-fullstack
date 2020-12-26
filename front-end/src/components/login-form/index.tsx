@@ -1,8 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../contexts/auth';
+
 import * as Styled from './styles';
-import { useHistory } from 'react-router-dom';
+
+import Input from '../input/index';
+import Form from '../form/index';
+import Label from '../label/index';
+
+import { useHistory, Link } from 'react-router-dom';
 
 import { gql, useMutation } from '@apollo/client';
 
@@ -60,7 +66,7 @@ const LoginForm: FunctionComponent = () => {
               email 
             }
         } 
-      `
+      `;
       
   const [login] = useMutation(LOGIN, { 
     errorPolicy: "all",
@@ -99,23 +105,23 @@ const LoginForm: FunctionComponent = () => {
 
    
 
-    return <Styled.Form onSubmit={handleSubmit}>
-            <Styled.Label htmlFor ="email">E-mail</Styled.Label>
-            <Styled.Input 
+    return <Form onSubmit={handleSubmit}>
+            <Label htmlFor ="email">E-mail</Label>
+            <Input 
                 id="email"
                 type="email"
                 onChange={handleInputChange}
             >
-            </Styled.Input>
-            <Styled.Label htmlFor ="password">Senha</Styled.Label>
-            <Styled.Input 
+            </Input>
+            <Label htmlFor ="password">Senha</Label>
+            <Input 
               id="password" 
               type="password"
               onChange={handleInputChange}
-            ></Styled.Input>
-            <Styled.NewAccountLink>Não tem uma conta? <strong>Criar nova conta</strong></Styled.NewAccountLink>
+            ></Input>
+            <Styled.NewAccountLink>Não tem uma conta? <Link to="/register"><strong>Criar nova conta</strong></Link></Styled.NewAccountLink>
             <Styled.Button>Entrar</Styled.Button>
-          </Styled.Form>
+          </Form>
 }
 
 export default LoginForm;

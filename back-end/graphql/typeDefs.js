@@ -7,6 +7,7 @@ module.exports = gql`
 		email: String!
 		createdAt: String
 		token: String
+		profilePic: String
 	}
 
 	type Query {
@@ -20,6 +21,7 @@ module.exports = gql`
 		password: String!
 		confirmPassword: String!
 		email: String!
+		profilePic: String!
 	}
 
 	type Mutation {

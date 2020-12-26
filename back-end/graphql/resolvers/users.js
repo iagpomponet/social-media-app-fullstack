@@ -7,6 +7,8 @@ const {
 	validateLoginInput,
 } = require('../../src/utils/user.validators');
 
+const { setLoggedHttpOnlyJWTCookie, setCookieAuth, clearAuthCookie, clearLoggedHttpOnlyJWTCookie } = require('../../src/utils/graphql-utils');
+
 function generateJWT(user) {
 	return jwt.sign(
 		{
@@ -22,7 +24,9 @@ module.exports = {
 	Mutation: {
 		register: async (
 			_,
-			{ registerInput: { username, password, confirmPassword, email } },
+			{ registerInput: { username, password, confirmPassword, email, profilePic } }, {
+				res
+			},
 		) => {
 			const { errors, valid } = validateRegisterInput(
 				username,
@@ -32,8 +36,6 @@ module.exports = {
 			);
 
 			if (!valid) {
-				console.log('validateRegisterInput :>> ', validateRegisterInput);
-				console.log('errors :>> ', errors, valid);
 				throw new UserInputError('Errors', { errors });
 			}
 
@@ -53,15 +55,20 @@ module.exports = {
 				email,
 				username,
 				password,
+				profilePic,
 				createdAt: new Date().toISOString(),
 			});
 
-			const res = await newUser.save();
+			const userResponse = await newUser.save();
 
-			const token = generateJWT(res);
+			const token = generateJWT(userResponse);
+
+			setLoggedHttpOnlyJWTCookie(token, res);
+			setCookieAuth(res);
 
 			return newUser;
 		},
+
 		login: async (_, { email, password }, { res }) => {
 			const { errors, valid } = validateLoginInput(email, password);
 
@@ -81,7 +88,6 @@ module.exports = {
 				throw new UserInputError('Wrong password', { errors });
 			}
 			
-
 			const token = generateJWT(user);
 
 			const returnObj = {
@@ -90,28 +96,15 @@ module.exports = {
 				token,
 			};
 
-			res.cookie("smAuthCookie", token, {
-				httpOnly: true,
-				sameSite: 'lax',
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-			});
-			
-			res.cookie("userLoggedIn", 'true', {
-				maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-			});
+			setLoggedHttpOnlyJWTCookie(token, res);
+			setCookieAuth(res);
 
 			return returnObj;
 		},
+		
 		logout(_ , __ , { res }){
-			res.cookie("smAuthCookie", '', {
-				httpOnly: true,
-				sameSite: 'lax',
-				maxAge: Date.now() // 7 days
-			});
-			
-			res.cookie("userLoggedIn", 'false', {
-				maxAge: Date.now() // 7 days
-			});
+			clearLoggedHttpOnlyJWTCookie(res);
+			clearAuthCookie(res);
 		}
 	},
 

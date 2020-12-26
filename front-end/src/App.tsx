@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme';
 import AuthProvider, { useAuth } from "./contexts/auth";
 import Header from './components/header/index';
+import RegisterPage from '../src/pages/register/index';
 
 
 import {
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route exact path="/login">
               <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
             </Route>
           </Router>
         </AuthProvider>

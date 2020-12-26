@@ -13,7 +13,7 @@ const LoginPage: FunctionComponent = () => {
       <Redirect path="/" /> : 
       <Styled.Container>
          <Styled.Login>
-         <LoginForm />
+            <LoginForm />
          </Styled.Login>
       </Styled.Container>
    )
