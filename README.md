@@ -1,13 +1,13 @@
 # Social Media App
 
-### Developing to better learn these technologies, still under construction, constructive criticism is always welcome
+### Developing to get better at these technologies. still under construction, constructive criticism is always welcome
 
 ## Technologies:
   **Back-end**
+  * Node.js
   * Graphql
   * Apollo Server 
   * MongoDB
-  * Node.js
   * Express
   
   **Front-end**
