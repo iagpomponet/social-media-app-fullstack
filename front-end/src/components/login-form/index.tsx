@@ -12,7 +12,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 import { gql, useMutation } from '@apollo/client';
 
-const LoginForm: FunctionComponent = () => {
+const LoginForm = () => {
   const [ userInput, setUserInput ] = useState({
     email: "",
     password: ""
@@ -21,7 +21,7 @@ const LoginForm: FunctionComponent = () => {
   const { user, setUser } = useAuth();
   const history = useHistory();
 
-  const handleInputChange = (e) => { 
+  const handleInputChange = (e) => {
     const { id, value } = e.target;
 
     setUserInput(prevState => ({
@@ -63,12 +63,12 @@ const LoginForm: FunctionComponent = () => {
         mutation MakeLogin($email: String!, $password: String!){
             login(email: $email, password: $password){
               username
-              email 
+              email
             }
-        } 
+        }
       `;
-      
-  const [login] = useMutation(LOGIN, { 
+
+  const [login] = useMutation(LOGIN, {
     errorPolicy: "all",
   });
 
@@ -91,7 +91,7 @@ const LoginForm: FunctionComponent = () => {
           localStorage.setItem('userData', JSON.stringify(newUserData));
           history.push('/');
         } else if (errors?.length){
-          Swal.fire({ 
+          Swal.fire({
             icon: "error",
             "title": `${errors[0]?.message}`
           })
@@ -103,19 +103,19 @@ const LoginForm: FunctionComponent = () => {
     }
   }
 
-   
+
 
     return <Form onSubmit={handleSubmit}>
-            <Label htmlFor ="email">E-mail</Label>
-            <Input 
+            <Label>E-mail</Label>
+            <Input
                 id="email"
                 type="email"
                 onChange={handleInputChange}
             >
             </Input>
-            <Label htmlFor ="password">Senha</Label>
-            <Input 
-              id="password" 
+            <Label>Senha</Label>
+            <Input
+              id="password"
               type="password"
               onChange={handleInputChange}
             ></Input>

@@ -19,6 +19,29 @@ export const Container = styled.div`
   width: 100%;
 `
 
+export const ProfileArea = styled.div`
+  display: flex;
+  max-width: 200px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+
+  cursor: pointer;
+    transition: 0.4s;
+
+  &:hover{
+    opacity: 0.4;
+  }
+
+  img {
+    display: flex;
+    border-radius: 100%;
+  }
+`
+
+
+
 export const Logout = styled.div`
   svg {
     width: 20px;

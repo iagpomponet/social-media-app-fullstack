@@ -7,14 +7,9 @@ import { useHistory } from 'react-router-dom';
 
 import { ReactComponent as Logout} from '../../icons/logout.svg'
 
-const Header: FunctionComponent = () => {
-  const { user, setUser } = useAuth();
-  const { signed, username } = user;
+const Header = () => {
+  const userData = useAuth();
   const history = useHistory();
-
-  console.log('history :>> ', user);
-  
-
   const LOGOUT = gql`
     mutation logoutUser{
       logout
@@ -23,16 +18,16 @@ const Header: FunctionComponent = () => {
 
   const [logout] = useMutation(LOGOUT);
 
+  const { user, setUser } = userData;
+  const { signed, username, profilePic } = user;
 
-  useEffect(() => {
-    const userData = localStorage.getItem('userData');
 
-    if(userData){
-      if(!user?.signed){
-        setUser(JSON.parse(userData))
-      }
-    }
-  });
+
+
+
+
+
+
 
   const handleLogout = async () => {
     try {
@@ -53,21 +48,29 @@ const Header: FunctionComponent = () => {
   }
 
   return (
+    signed ?
     <Styled.Header>
         {
-          signed ? 
+          signed ?
           <Styled.Container>
-              <span>Olá {username}</span>
-              <Styled.Logout  >
+              <Styled.ProfileArea>
+                {
+                  profilePic ?
+                  <img width="30px" height="30px" src={profilePic}></img> :
+                  ''
+                }
+                <span>Olá {username}</span>
+              </Styled.ProfileArea>
+              <Styled.Logout>
                 <Logout  onClick={handleLogout} />
               </Styled.Logout>
             </Styled.Container> :
             <Styled.Container>
-              Faça login
             </Styled.Container>
         }
-      
-    </Styled.Header>
+
+    </Styled.Header> :
+    <div></div>
   );
 }
 

@@ -6,7 +6,7 @@ interface Props {
   props: string
 }
 
-const Form: FunctionComponent<Props> = ({ children, onSubmit }) => {
+const Form = ({ children, onSubmit }) => {
   return <Styled.Form onSubmit={onSubmit}>
     { children }
   </Styled.Form>;

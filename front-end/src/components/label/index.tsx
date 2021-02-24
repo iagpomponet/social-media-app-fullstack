@@ -1,10 +1,10 @@
 import * as Styled from "./styles";
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 
-const Label: FunctionComponent = ({ children }) => {
+const Label = ({ children }) => {
   return <Styled.Label>
-    { children } 
+    { children }
   </Styled.Label>;
 }
 

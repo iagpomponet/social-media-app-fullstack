@@ -1,8 +1,17 @@
 import { createContext, useContext, useState} from 'react';
 
 
+interface AuthContextInterface {
+  user: any,
+  setUser: Function
+}
 
-export const AuthContext = createContext({});
+// TODO - Tipar user ^^^^
+
+export const AuthContext = createContext<AuthContextInterface>({
+  user: {},
+  setUser: () => {}
+});
 
 const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState({ signed: false });
@@ -16,6 +25,8 @@ const AuthProvider: React.FC = ({ children }) => {
    </AuthContext.Provider>
   )
 }
+
+
 
 // auth hook
 export function useAuth(){

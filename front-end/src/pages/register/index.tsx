@@ -11,13 +11,13 @@ const RegisterPage: FunctionComponent = () => {
 
   return (
     authCookie && authCookie != 'false' ?
-    <Redirect path="/" /> : 
+    <Redirect to="/" /> :
     <Styled.RegisterPage>
       <Styled.Container>
         <RegisterForm width="600px" />
       </Styled.Container>
     </Styled.RegisterPage>
   )
-} 
+}
 
 export default RegisterPage;
