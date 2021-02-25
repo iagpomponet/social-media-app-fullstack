@@ -1,16 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie'
-import { useAuth } from '../../contexts/auth';
-import { Redirect } from 'react-router-dom'
+import { getUsers } from '../../service/UserService';
+import { Redirect, Link } from 'react-router-dom'
 
-const Feed = () => { 
+const Feed = () => {
   const authCookie = Cookies.get('userLoggedIn');
+  const [users, setUsers] = useState({
+    users: []
+  });
+
+  const handleFeed = async () => {
+    const users = await getUsers();
+    const { data } = users;
+
+    setUsers(data);
+  }
+
+  useEffect(() => {
+    handleFeed();
+  }, []);
+
+  console.log('users :>> ', users);
 
   return (
-    !authCookie || authCookie == 'false' ? 
+    !authCookie || authCookie == 'false' ?
     <Redirect to="/login" /> :
     <div>
-      Feed
+      {users?.users && users.users.map(user => {
+        return <article>
+          <Link to={`/users/${user?._id}`}>
+            <div>{user?.username}</div>
+          </Link>
+
+        </article>
+      })}
     </div>
   )
 }

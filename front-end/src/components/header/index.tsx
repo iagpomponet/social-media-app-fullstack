@@ -14,19 +14,16 @@ const Header = () => {
     mutation logoutUser{
       logout
     }
-  `
+  `;
 
   const [logout] = useMutation(LOGOUT);
 
   const { user, setUser } = userData;
   const { signed, username, profilePic } = user;
 
-
-
-
-
-
-
+  console.log('userData :>> ', userData);
+  console.log('user :>> ', user);
+  console.log('user :>> ', user);
 
 
   const handleLogout = async () => {
@@ -70,7 +67,7 @@ const Header = () => {
         }
 
     </Styled.Header> :
-    <div></div>
+    <div>NOT SIGNED</div>
   );
 }
 

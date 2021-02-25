@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from '@apollo/client';
 
-import Feed from '../src/pages/feed/index';
 import client from './service/client';
-import LoginPage from './pages/login/index';
+
 import GlobalStyle from './globalStyles'
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme';
 import AuthProvider, { useAuth } from "./contexts/auth";
 import Header from './components/header/index';
-import RegisterPage from '../src/pages/register/index';
+
+import Routes from './routes/index';
 
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 function App() {
   const [theme] = useState(defaultTheme);
-  
+
 
   return (
     <ApolloProvider client={client}>
@@ -30,15 +28,7 @@ function App() {
         <AuthProvider>
           <Router>
             <Header />
-            <Route exact path="/">
-              <Feed />
-            </Route>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Route exact path="/register">
-              <RegisterPage />
-            </Route>
+            <Routes />
           </Router>
         </AuthProvider>
       </ThemeProvider>

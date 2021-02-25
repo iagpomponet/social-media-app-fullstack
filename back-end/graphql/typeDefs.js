@@ -12,7 +12,7 @@ module.exports = gql`
 
 	type Query {
 		users: [User]
-		user(id: Int): User
+		user(id: ID): User
 		getPosts: [Post!]!
 	}
 

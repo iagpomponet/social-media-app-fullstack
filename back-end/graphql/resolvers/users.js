@@ -87,7 +87,7 @@ module.exports = {
 			if (!passwordMatch) {
 				throw new UserInputError('Wrong password', { errors });
 			}
-			
+
 			const token = generateJWT(user);
 
 			const returnObj = {
@@ -101,7 +101,7 @@ module.exports = {
 
 			return returnObj;
 		},
-		
+
 		logout(_ , __ , { res }){
 			clearLoggedHttpOnlyJWTCookie(res);
 			clearAuthCookie(res);
@@ -118,5 +118,19 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+
+    user: async (_, { id }, context, teste) => {
+
+      try {
+        // const teste = ObjectId.fromString( id );
+        const data = await User.findById(id);
+
+        console.log('data :>> ', data);
+
+        return data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
 	},
 };
